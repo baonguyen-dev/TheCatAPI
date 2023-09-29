@@ -15,30 +15,30 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@AndroidEntryPoint
-class BreedsActivity : AppCompatActivity() {
-    private val viewModel: BreedsViewModel by viewModels()
-    private lateinit var binding: ActivityBreedsBinding
-    private lateinit var adapter: BreedsAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityBreedsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        adapter = BreedsAdapter()
-        binding.run {
-            rcvCatImages.adapter = adapter
-            btnClickMe.setOnClickListener {
-                viewModel.getCatImage()
-            }
-
-            lifecycleScope.launch {
-                viewModel.catImages.collect {
-                    withContext(Dispatchers.Main) {
-                        adapter.setCatImages(it)
-                    }
-                }
-            }
-        }
-    }
-}
+//@AndroidEntryPoint
+//class BreedsActivity : AppCompatActivity() {
+//    private val viewModel: BreedsViewModel by viewModels()
+//    private lateinit var binding: ActivityBreedsBinding
+//    private lateinit var adapter: BreedsAdapter
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = ActivityBreedsBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//        adapter = BreedsAdapter()
+//        binding.run {
+//            rcvCatImages.adapter = adapter
+//            btnClickMe.setOnClickListener {
+//                viewModel.getCatImage()
+//            }
+//
+//            lifecycleScope.launch {
+//                viewModel.catImages.collect {
+//                    withContext(Dispatchers.Main) {
+//                        adapter.setCatImages(it)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

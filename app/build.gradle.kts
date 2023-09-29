@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     val hiltVersion = "2.48"
     val okhttpVersion = "4.9.3"
 

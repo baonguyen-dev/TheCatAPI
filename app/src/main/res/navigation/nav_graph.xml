@@ -3,26 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/BreedsFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.the_cat_api.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/BreedsFragment"
+        android:name="com.example.the_cat_api.ui.breeds.BreedsFragment"
+        android:label="@string/breeds_fragment"
+        tools:layout="@layout/fragment_breeds">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_BreedsFragment_to_SpecificBreedFragment"
+            app:destination="@id/SpecificBreedFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.the_cat_api.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        android:id="@+id/SpecificBreedFragment"
+        android:name="com.example.the_cat_api.ui.specific_breed.SpecificBreedFragment"
+        android:label="@string/specific_breed_fragment"
+        tools:layout="@layout/fragment_specific_breed">
     </fragment>
 </navigation>
