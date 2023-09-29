@@ -14,7 +14,7 @@ import com.example.the_cat_api.data.model.CatImage
 
 class BreedsAdapter : RecyclerView.Adapter<BreedsAdapter.CatImageViewHolder>() {
 
-    private var catImages: List<CatBreedImage> = emptyList()
+    private var catImages: MutableList<CatBreedImage> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatImageViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -38,7 +38,7 @@ class BreedsAdapter : RecyclerView.Adapter<BreedsAdapter.CatImageViewHolder>() {
     override fun getItemCount() = catImages.size
 
     fun setCatImages(images: List<CatBreedImage>) {
-        catImages = images
+        catImages.addAll(images)
         notifyDataSetChanged()
     }
 

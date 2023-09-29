@@ -22,6 +22,6 @@ interface CatApiService {
 
     @GET("images/{image_id}")
     suspend fun getBreedImage(
-        @Path("image_id") imageId: String
+        @Path("image_id") imageId: String?
     ) : CatBreedImage
 }

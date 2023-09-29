@@ -9,6 +9,6 @@ import javax.inject.Singleton
 @Singleton
 interface CatRepository {
     suspend fun getCatBreeds(limit: Int, page: Int) : List<CatBreed>
-    suspend fun getCatBreedImage(id: String) : CatBreedImage
+    suspend fun getCatBreedImage(id: String?) : CatBreedImage?
     suspend fun getCatImages(limit: Int, breedIds: String) : List<CatImage>
 }

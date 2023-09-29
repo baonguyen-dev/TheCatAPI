@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.the_cat_api.data.model.CatBreedImage
 import com.example.the_cat_api.databinding.FragmentBreedsBinding
 import com.example.the_cat_api.ui.breeds.controller.BreedsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +25,8 @@ class BreedsFragment : Fragment() {
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
+    private var isLoading = false
+    private var currentPage = 1
 
     companion object {
         fun newInstance() = BreedsFragment()
@@ -39,18 +44,49 @@ class BreedsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         adapter = BreedsAdapter()
         binding.apply {
+            val layoutManager = rcvCatImages.layoutManager as LinearLayoutManager
             rcvCatImages.adapter = adapter
-            btnClickMe.setOnClickListener {
-                viewModel.getCatImage()
-            }
+            rcvCatImages.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    layoutManager?.apply {
+                        val visibleItemCount = this.childCount
+                        val totalItemCount = this.itemCount
+                        val firstVisibleItem = this.findFirstVisibleItemPosition()
+
+                        if (!isLoading && (visibleItemCount + firstVisibleItem) >= totalItemCount) {
+                            // Reached the end of the current data set
+                            loadNextPage()
+                        }
+                    }
+                }
+            })
 
             lifecycleScope.launch {
                 viewModel.catImages.collect {
                     withContext(Dispatchers.Main) {
-                        adapter.setCatImages(it)
+                        adapter.setCatImages(it) // Append new data to the adapter
+                        isLoading = false // Reset isLoading flag
                     }
                 }
             }
+        }
+
+        loadData(currentPage)
+    }
+
+    private fun loadData(page: Int) {
+        lifecycleScope.launch {
+            viewModel.getCatImage(page = page)
+        }
+    }
+
+    private fun loadNextPage() {
+        if (!isLoading) {
+            isLoading = true
+            currentPage++
+            loadData(currentPage)
         }
     }
 

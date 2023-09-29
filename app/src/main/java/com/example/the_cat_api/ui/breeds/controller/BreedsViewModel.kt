@@ -24,17 +24,20 @@ class BreedsViewModel @Inject constructor(
     private var catBreedImages = mutableListOf<CatBreedImage>()
 
     fun getCatImage(limit: Int = 10, page: Int = 0) {
-        viewModelScope.launch {
-            val catBreeds = catRepository.getCatBreeds(limit, page)
-            fetchListBreedImage(catBreeds)
+            viewModelScope.launch {
+                val catBreeds = catRepository.getCatBreeds(limit, page)
+                if (catBreeds.isNotEmpty())
+                    fetchListBreedImage(catBreeds)
         }
     }
 
     private fun fetchListBreedImage(catBreeds: List<CatBreed>) {
         viewModelScope.launch {
+            catBreedImages = mutableListOf()
             for (catBreed in catBreeds) {
                 val catBreedImage = catRepository.getCatBreedImage(catBreed.referenceImageId)
-                catBreedImages.add(CatBreedImage(catBreedImage.id, catBreedImage.url, catBreedImage.breeds))
+                if (catBreedImage != null)
+                    catBreedImages.add(CatBreedImage(catBreedImage.id, catBreedImage.url, catBreedImage.breeds))
             }
             _catImages.emit(catBreedImages)
         }

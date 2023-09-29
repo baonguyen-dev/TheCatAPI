@@ -14,7 +14,10 @@ import javax.inject.Singleton
 class CatRepositoryImpl @Inject constructor (private val catApiService: CatApiService) : CatRepository {
     override suspend fun getCatBreeds(limit: Int, page: Int): List<CatBreed> {
         try {
-            return catApiService.getCatBreeds(limit, page)
+            val catBreeds = catApiService.getCatBreeds(limit, page)
+            return catBreeds.ifEmpty {
+                emptyList()
+            }
         }
         catch (ex: Exception) {
             ex.message?.let { Log.e("getCatBreeds", it) }
@@ -22,14 +25,15 @@ class CatRepositoryImpl @Inject constructor (private val catApiService: CatApiSe
         return emptyList()
     }
 
-    override suspend fun getCatBreedImage(id: String): CatBreedImage {
+    override suspend fun getCatBreedImage(id: String?): CatBreedImage? {
         try {
-            return catApiService.getBreedImage(id)
+            if (!id.isNullOrEmpty())
+                return catApiService.getBreedImage(id)
         }
         catch (ex: Exception) {
             ex.message?.let { Log.e("getCatBreedImage", it) }
         }
-        return CatBreedImage(String(), String(), mutableListOf())
+        return null
     }
 
     override suspend fun getCatImages(limit: Int, breedIds: String): List<CatImage> {
