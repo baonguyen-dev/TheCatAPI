@@ -2,13 +2,11 @@ package com.example.the_cat_api.di
 
 import com.example.the_cat_api.BuildConfig
 import com.example.the_cat_api.data.data_source.remote.CatApiService
-import com.example.the_cat_api.util.ApiConstants
 import com.example.the_cat_api.util.Constants
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

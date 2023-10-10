@@ -40,8 +40,8 @@ class BreedsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = BreedsAdapter()
         binding.apply {
             val layoutManager = rcvCatImages.layoutManager as LinearLayoutManager
@@ -50,7 +50,7 @@ class BreedsFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    layoutManager?.apply {
+                    layoutManager.apply {
                         val visibleItemCount = this.childCount
                         val totalItemCount = this.itemCount
                         val firstVisibleItem = this.findFirstVisibleItemPosition()
