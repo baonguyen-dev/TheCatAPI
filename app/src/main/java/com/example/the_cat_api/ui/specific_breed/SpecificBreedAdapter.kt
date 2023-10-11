@@ -1,4 +1,4 @@
-package com.example.the_cat_api.ui.breeds
+package com.example.the_cat_api.ui.specific_breed
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.the_cat_api.R
-import com.example.the_cat_api.data.model.CatBreed
 import com.example.the_cat_api.data.model.CatBreedImage
 import com.example.the_cat_api.data.model.CatImage
+import com.example.the_cat_api.ui.breeds.BreedsAdapter
 
-class BreedsAdapter : RecyclerView.Adapter<BreedsAdapter.CatImageViewHolder>() {
+class SpecificBreedAdapter: RecyclerView.Adapter<SpecificBreedAdapter.CatImageViewHolder>() {
 
     private lateinit var onItemClick: (String) -> Unit
-    private var catImages: MutableList<CatBreedImage> = mutableListOf()
+    private var catImages: MutableList<CatImage> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatImageViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -38,37 +38,17 @@ class BreedsAdapter : RecyclerView.Adapter<BreedsAdapter.CatImageViewHolder>() {
 
     override fun getItemCount() = catImages.size
 
-    fun setCatImages(images: List<CatBreedImage>) {
-        catImages.let {
-            val startPosition = it.size
-            it.addAll(images)
-            notifyItemRangeInserted(startPosition, images.size)
-        }
-    }
-
-    fun clearCatImages() {
-        catImages.let {
-            val size = it.size
-            it.clear()
-            notifyItemRangeRemoved(0, size)
-        }
-    }
-
-    fun setOnItemClick(onItemClick: (String) -> Unit) {
-        this.onItemClick = onItemClick
+    fun setCatImages(images: List<CatImage>) {
+        catImages.addAll(images)
+        notifyItemRangeInserted(catImages.size, images.size)
     }
 
     inner class CatImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val catIdTextView: TextView = itemView.findViewById(R.id.tv_cat_id)
         private val catBreedImageView: ImageView = itemView.findViewById(R.id.iv_cat_breed)
-        fun bind(catImage: CatBreedImage) {
-            catIdTextView.text = catImage.breeds[0].name
+        fun bind(catImage: CatImage) {
             Glide.with(itemView)
                 .load(catImage.url)
                 .into(catBreedImageView)
-            itemView.setOnClickListener {
-                onItemClick(catImage.breeds[0].id)
-            }
         }
     }
 }

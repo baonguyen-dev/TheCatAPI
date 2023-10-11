@@ -10,7 +10,6 @@
         android:name="com.example.the_cat_api.ui.breeds.BreedsFragment"
         android:label="@string/breeds_fragment"
         tools:layout="@layout/fragment_breeds">
-
         <action
             android:id="@+id/action_BreedsFragment_to_SpecificBreedFragment"
             app:destination="@id/SpecificBreedFragment" />
@@ -20,5 +19,8 @@
         android:name="com.example.the_cat_api.ui.specific_breed.SpecificBreedFragment"
         android:label="@string/specific_breed_fragment"
         tools:layout="@layout/fragment_specific_breed">
+        <argument
+            android:name="breed_id"
+            app:argType="string" />
     </fragment>
 </navigation>

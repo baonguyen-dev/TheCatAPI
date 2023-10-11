@@ -5,8 +5,8 @@ import com.example.the_cat_api.data.data_source.remote.CatApiService
 import com.example.the_cat_api.data.model.CatBreed
 import com.example.the_cat_api.data.model.CatBreedImage
 import com.example.the_cat_api.data.model.CatImage
-import dagger.hilt.android.scopes.ViewModelScoped
-import java.util.logging.Logger
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,13 +36,14 @@ class CatRepositoryImpl @Inject constructor (private val catApiService: CatApiSe
         return null
     }
 
-    override suspend fun getCatImages(limit: Int, breedIds: String): List<CatImage> {
+    override fun getCatImages(limit: Int, breedIds: String): Single<List<CatImage>> {
         try {
-            return catApiService.searchImages(limit, breedIds)
+            if (breedIds.isNotEmpty())
+                return catApiService.searchImages(limit, breedIds)
         }
         catch (ex: Exception) {
             ex.message?.let { Log.e("getCatImages", it) }
         }
-        return emptyList()
+        return Single.error(Throwable("getCatImages"))
     }
 }
